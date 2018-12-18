@@ -1,4 +1,5 @@
-// This code contains two potential bugs: if the letter following "qu" in an initail consonant string is not a vowel, the code will fail; if "y" is the first letter of a word and the letter following "y" is a consonant, the code will fail. The code will correctly return words if the first letter is capitazlied, but cannot handle embedded punctuation or capitalization. Extra whitespace and punctuation outside of a word are not accounted for.
+// This code contains several potential bugs: if the letter following "qu" in an initail consonant string is not a vowel, the code will fail; if "y" is the first letter of a word and the letter following "y" is a consonant, the code will fail. The code will correctly return words if the first letter is capitazlied, but cannot handle embedded punctuation or capitalization.
+// Note: This code can be refactored with the .map() array method
 
 function translateSentence(sentence) {
   var lowercaseWords = sentence.toLowerCase().split(" ")
@@ -19,7 +20,7 @@ function translateWord(word) {
     return word.concat("way")
   } else if (firstLetter === "y") {
     return word.slice(1) + "yay"
-  } else {
+  } else if (firstLetter === "b" || firstLetter === "c" || firstLetter === "d" || firstLetter === "f" || firstLetter === "g" || firstLetter === "h" || firstLetter === "j" || firstLetter === "k" || firstLetter === "l" || firstLetter === "m" || firstLetter === "n" || firstLetter === "p" || firstLetter === "q" || firstLetter === "r" || firstLetter === "s" || firstLetter === "t" || firstLetter === "v" || firstLetter === "x" || firstLetter === "z") {
     for (var i = 0; i < word.length - 1; i ++) {
       if (word[i] === "a" || word[i] === "e" || word[i] === "i" || word[i] === "o" || word[i] === "u" || word[i] === "y") {
         counter += 1
@@ -34,9 +35,11 @@ function translateWord(word) {
         }
       }
     }
+    newWord = word.slice(consonants.length)
+    return newWord.concat(consonants.join("") + "ay")
+  } else {
+    return word
   }
-  newWord = word.slice(consonants.length)
-  return newWord.concat(consonants.join("") + "ay")
 }
 
 function capitalize(regularWords, pigLatinWords) {
